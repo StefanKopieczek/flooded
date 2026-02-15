@@ -1,0 +1,22 @@
+{
+  "name": "a417-traffic-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-12-01",
+  "routes": [
+    { "pattern": "traffic.ismaisemoreflooded.com", "custom_domain": true }
+  ],
+
+  // Cron Trigger: poll Mapbox every minute
+  "triggers": {
+    "crons": ["* * * * *"]
+  },
+
+  // D1 database binding – replace <DATABASE_ID> after creating the DB
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "a417-traffic",
+      "database_id": "8d972686-47b9-4e07-aa28-9e788a831fb0"
+    }
+  ]
+}
