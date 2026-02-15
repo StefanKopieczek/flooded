@@ -333,7 +333,7 @@ function App() {
             <div className="card-header">
               <h2>Water Levels</h2>
               <div className="chart-range">
-                {[1, 3, 7, 14, 30].map((d) => (
+                {[1, 3, 7].map((d) => (
                   <button
                     key={d}
                     className={`range-btn ${chartDays === d ? "active" : ""}`}
