@@ -388,7 +388,7 @@ function getCongestionLabel(delaySec: number, durationSec: number): string {
 function getStatusConfig(
   status: FloodStatus,
   trend: TrendDirection,
-  roadAssessment: RoadAssessment
+  roadAssessment: RoadAssessment | null
 ): { answer: string; detail: string } {
   switch (status) {
     case "FLOODED":
@@ -402,7 +402,7 @@ function getStatusConfig(
             : "The river is above the road flooding level. The A417 is impassable.",
       };
     case "NEAR_FLOOD":
-      if (roadAssessment.isOpen || roadAssessment === null) {
+      if (roadAssessment === null || roadAssessment.isOpen) {
         return {
           answer: "Maybe / soon.",
           detail:
