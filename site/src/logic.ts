@@ -28,8 +28,8 @@ export function determineFloodStatus(
 ): FloodStatus {
   if (currentLevel === null) return "UNKNOWN";
 
-  if (currentLevel >= THRESHOLDS.ROAD_FLOOD) return "FLOODED";
-  if (currentLevel >= THRESHOLDS.FLOOD_WARNING) return "NEAR_FLOOD";
+  if (currentLevel >= THRESHOLDS.ROAD_FLOOD - 0.05) return "FLOODED";
+  if (currentLevel >= THRESHOLDS.FLOOD_WARNING - 0.05) return "NEAR_FLOOD";
 
   // Check if there was a flood in the last 7 days
   const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;

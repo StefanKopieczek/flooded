@@ -152,7 +152,7 @@ function App() {
       });
   }, [chartDays]);
 
-  const statusConfig = getStatusConfig(floodStatus, trend);
+  const statusConfig = getStatusConfig(floodStatus, trend, roadAssessment);
 
   return (
     <div className="app">
@@ -387,7 +387,8 @@ function getCongestionLabel(delaySec: number, durationSec: number): string {
 
 function getStatusConfig(
   status: FloodStatus,
-  trend: TrendDirection
+  trend: TrendDirection,
+  roadAssessment: RoadAssessment
 ): { answer: string; detail: string } {
   switch (status) {
     case "FLOODED":
@@ -401,13 +402,21 @@ function getStatusConfig(
             : "The river is above the road flooding level. The A417 is impassable.",
       };
     case "NEAR_FLOOD":
-      return {
-        answer: "Not yet.",
-        detail:
-          trend === "RISING"
-            ? "The river is near the road flooding level and rising. The road is likely still passable but conditions may worsen — drive with caution."
-            : "The river is near the road flooding level. The road is likely still passable but may be affected if levels rise.",
-      };
+      if (roadAssessment.isOpen || roadAssessment === null) {
+        return {
+          answer: "Maybe / soon.",
+          detail:
+            trend === "RISING"
+              ? "The river is near the road flooding level and rising. The road may potentially be passable but conditions will likely worsen — drive with caution."
+              : "The river is near the road flooding level. The road may potentially be passable but may be affected if levels rise.",
+        };
+      } else {
+        return {
+          answer: "Probably.",
+          detail:           
+             "The river is near the historic road flooding level and the road appears to have been closed."              
+        };
+      }
     case "RECEDING":
       return {
         answer: "Receding.",
